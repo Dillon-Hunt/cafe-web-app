@@ -1,0 +1,21 @@
+.Under5 {
+    margin-bottom: 20px;
+}
+
+.Under5__Title {
+    margin-bottom: 10px;
+
+    font-size: var(--font-24);
+}
+
+.Under5__Items {
+    gap: 10px;
+
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
+.Under5__Title__Highlighted {
+    color: var(--shamrock);
+}
