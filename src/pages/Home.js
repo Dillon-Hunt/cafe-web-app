@@ -5,13 +5,15 @@ import Under5 from '../components/Under5'
 
 import '../styles/Home.css'
 
-function Home() {
+function Home(props) {
+    const { products } = props
+
     return (
         <div className='Home'>
             <WelcomeBanner />
             <Search />
-            <Popular />
-            <Under5 />
+            <Popular products={products} />
+            <Under5 products={products} />
         </div>
   ) 
 }

@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { initializeApp } from "firebase/app"
 import { getFirestore, collection, getDocs } from "firebase/firestore"
+import { useEffect, useState } from 'react';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD1MZx4gn6sZB83dm16fgaGG-wLw6mId_o",
@@ -23,16 +24,24 @@ export const app = initializeApp({...firebaseConfig})
 export const database = getFirestore(app)
 
 function App() {
-  getDocs(collection(database, 'products')).then(results => {
-    console.log(results.docs.map(result => result.data()))
-  })
+  const [products, setProducts] = useState(null)
+
+  useEffect(() => {
+    getDocs(collection(database, 'products')).then(results => {
+    setProducts(results.docs.map(result => {
+      let products = result.data()
+      products.id = result.id
+      return products
+    }))
+  })}, [])
+  
 
   return (
     <div className='App'>
       <BrowserRouter>
         <Routes>
-          <Route path='/home' element={<Home />}/>
-          <Route path='/items/:itemId' element={<ItemOverview />}/>
+          <Route path='/home' element={products !== null && <Home products={products} />}/>
+          <Route path='/products/:productId' element={products !== null && <ItemOverview products={products} />}/>
           <Route path='*' element={<NoPage />}/>
         </Routes>
       </BrowserRouter>
