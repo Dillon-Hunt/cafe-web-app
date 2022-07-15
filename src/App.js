@@ -7,7 +7,7 @@ import NoPage from './pages/NoPage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { initializeApp } from "firebase/app"
-import { getAnalytics } from "firebase/analytics"
+import { getFirestore, collection, getDocs } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyD1MZx4gn6sZB83dm16fgaGG-wLw6mId_o",
@@ -19,12 +19,14 @@ const firebaseConfig = {
   measurementId: "G-FT6SQ8GD6G"
 }
 
-
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const app = initializeApp({...firebaseConfig})
+export const database = getFirestore(app)
 
 function App() {
-  // Get Product Data Here and Parse Into All Sections & pages to limit reads
+  getDocs(collection(database, 'products')).then(results => {
+    console.log(results.docs.map(result => result.data()))
+  })
+
   return (
     <div className='App'>
       <BrowserRouter>
