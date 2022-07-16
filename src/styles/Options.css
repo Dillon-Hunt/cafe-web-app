@@ -1,0 +1,55 @@
+.Options {
+    width: 100vw;
+    height: calc(100vh - 80px);
+
+    padding: 20px;
+    top: 100vh;
+    left: 0;
+    border-radius: 10px;
+
+    background-color: #3D404E;
+    position: fixed;
+    transition: .4s ease-in-out;
+    box-sizing: border-box;
+}
+
+.Options[shown = true] {
+    top: 80px;
+}
+
+.Options__Select {
+    color: var(--charade);
+}
+
+.Options__Label {
+    margin-bottom: 5px;
+}
+
+.Options__Quantity {  
+    width: calc(100% - 22px);
+    height: 38px;
+
+    padding: 0 10px;
+    border-radius: 5px;
+    font-weight: 600;
+
+    border: 1px solid var(--charade);
+    font-size: var(--font-18);
+}
+
+.Options__AddToOrder__Button {
+    width: calc(100vw - 40px);
+    height: 80px;
+
+    bottom: 20px;
+    left: 20px;
+    border-radius: 5px;
+
+    background-color: var(--shamrock);
+    color: var(--white);
+    font-size: var(--font-18);
+
+    cursor: pointer;
+    position: absolute;
+    border: none;
+}

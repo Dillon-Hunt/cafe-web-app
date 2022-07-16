@@ -3,7 +3,7 @@ import '../styles/WelcomeBanner.css'
 function WelcomeBanner() {
     return (
         <div className="WelcomeBanner">
-            <p>Hi, Dillon</p>
+            <p className="WelcomeBanner__Greeting">Hi, Dillon</p>
         </div>
     )
 }

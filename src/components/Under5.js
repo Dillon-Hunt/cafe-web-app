@@ -3,7 +3,7 @@ import Item from './Item'
 import '../styles/Under5.css'
 
 function Under5(props) {
-  const { products } = props
+  const products = props.products.filter(product => product.prices.min < 5)
 
   return (
     <div className='Under5'>

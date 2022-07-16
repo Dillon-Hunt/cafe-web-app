@@ -2,6 +2,8 @@ import './App.css';
 
 import Home from './pages/Home'
 import ItemOverview from './pages/ItemOverview'
+import Checkout from './pages/Checkout';
+import Success from './pages/Success';
 import NoPage from './pages/NoPage'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -22,6 +24,7 @@ const firebaseConfig = {
 
 export const app = initializeApp({...firebaseConfig})
 export const database = getFirestore(app)
+// Add Analytics
 
 function App() {
   const [products, setProducts] = useState(null)
@@ -42,6 +45,8 @@ function App() {
         <Routes>
           <Route path='/home' element={products !== null && <Home products={products} />}/>
           <Route path='/products/:productId' element={products !== null && <ItemOverview products={products} />}/>
+          <Route path='/checkout' element={products !== null && <Checkout products={products} />}/>
+          <Route path='/success' element={<Success />}/>
           <Route path='*' element={<NoPage />}/>
         </Routes>
       </BrowserRouter>

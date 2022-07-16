@@ -1,3 +1,12 @@
 .WelcomeBanner {
     font-weight: 400;
 }
+
+.WelcomeBanner__Greeting {
+    margin-top: 35px;
+    margin-bottom: 0;
+
+    font-size: var(--font-24);
+    
+    color: #E0E0E0;
+}

@@ -4,6 +4,7 @@ import Popular from '../components/Popular'
 import Under5 from '../components/Under5'
 
 import '../styles/Home.css'
+import Navigation from '../components/Navigation'
 
 function Home(props) {
     const { products } = props
@@ -14,6 +15,7 @@ function Home(props) {
             <Search />
             <Popular products={products} />
             <Under5 products={products} />
+            <Navigation />
         </div>
   ) 
 }
