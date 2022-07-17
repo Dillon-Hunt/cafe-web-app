@@ -1,11 +1,17 @@
 import '../styles/Checkout.css'
 
-import CheckoutItem, { formatPrice } from '../components/CheckoutItem';
-import Navigation from '../components/Navigation';
+import CheckoutItem, { formatPrice } from '../components/CheckoutItem'
+import Navigation from '../components/Navigation'
 
-import { useNavigate } from 'react-router-dom';
+import { database } from '../App'
 
-function Checkout() {
+import { useNavigate } from 'react-router-dom'
+import { addDoc, collection } from 'firebase/firestore'
+import { Helmet } from 'react-helmet-async'
+
+function Checkout(props) {
+    const { signedIn } = props
+
     const order = JSON.parse(localStorage.getItem('order'))
 
     let total = 0
@@ -18,6 +24,7 @@ function Checkout() {
 
     const submitOrder = () => {
         if (order !== null) {
+            addDoc(collection(database, 'orders'), { items: order, name: signedIn.displayName, time: Date.now() })
             localStorage.clear()
             navigate('/success')
         }
@@ -25,6 +32,10 @@ function Checkout() {
 
     return (
         <div className='Checkout'>
+            <Helmet>
+                <title>Checkout | St Andrew's Anglican College Hospitality</title>
+            </Helmet>
+
             <h1 className='Checkout__Title'>Checkout</h1>
             <div className='Checkout__Items'>
                 {

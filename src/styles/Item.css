@@ -24,7 +24,7 @@
 
     font-size: var(--font-18);
 
-    color: #2C2D2F;
+    color: var(--charade);
 }
 
 .Item__Subtitle {
@@ -59,7 +59,7 @@
 
     font-size: var(--font-14);
 
-    color: #808080;
+    color: var(--light-charade);
     position: absolute;
 }
 

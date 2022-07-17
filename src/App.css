@@ -7,8 +7,7 @@
   --font-10: 10px;
 
   --charade: #252731;
-  --light-charade: #2A2C36;
-  --valencia: #D63030;
+  --light-charade: #3D404E;
   --shamrock: #39CC97;
   --white: #FFF;
 
@@ -35,4 +34,15 @@ body {
 
 .App {
   font-family: 'Rubik', sans-serif;
+}
+
+.App__Loading {
+  left: 50vw;
+  top: 50vh;
+  margin: 0;
+
+  transform: translate(-50%, -50%);
+  color: var(--white);
+
+  position: absolute;
 }

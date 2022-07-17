@@ -28,7 +28,7 @@
 }
 
 .Checkout__Total__Value { 
-    color: #E0E0E0;
+    color: var(--white);
 }
 
 .Checkout__Checkout__Button {

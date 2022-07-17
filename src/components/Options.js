@@ -6,49 +6,27 @@ import { formatPrices } from './Item'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+function getOptions(rawOptions) {
+    let options = {}
+    Object.keys(rawOptions).sort((a, b) => a > b).forEach(option => { 
+        options[option] = rawOptions[option].map(optionItem => {
+            return {
+                value: optionItem,
+                label: optionItem,
+                for: option,
+            }
+        })
+    })
+    return options
+}
+
 function Options(props) {
     const { shown, product } = props
     product.prices = formatPrices(product.prices)
 
     const navigate = useNavigate()
 
-    const milkOptions = [
-        {
-            value: 0,
-            label: 'Skim Milk',
-        },
-        {
-            value: 1,
-            label: 'Full Cream Milk',
-        },
-        {
-            value: 2,
-            label: 'Almond Milk',
-        },
-        {
-            value: 3,
-            label: 'Coconut Milk',
-        },
-    ].sort((a, b) => a.value > b.value)
-
-    const sugarOptions = [
-        {
-            value: 0,
-            label: 'No Sugar',
-        },
-        {
-            value: 1,
-            label: '1 Sugar',
-        },
-        {
-            value: 2,
-            label: '2 Sugars',
-        },
-        {
-            value: 3,
-            label: '3 Sugars',
-        },
-    ].sort((a, b) => a.value > b.value)
+    const options = getOptions(product.options)
 
     const sizeOptions = Object.keys(product.prices).map(key => {
         if (key === 'min' || key === 'max') return null
@@ -59,13 +37,11 @@ function Options(props) {
     }).filter(price => price !== null).sort((a, b) => a.value > b.value)
 
     const [item, setItem] = useState({
-        title: product.title,
+        title: product.title + ' - ' + sizeOptions[0].label.split(" - ")[0],
         subtitle: product.subtitle,
         image: product.image,
-        milk: milkOptions[0].label,
-        sugar: sugarOptions[0].label,
-        price: sizeOptions[0].value,
         size: sizeOptions[0].label.split(" - ")[0],
+        price: sizeOptions[0].value,
         quantity: 1,
     })
 
@@ -79,25 +55,13 @@ function Options(props) {
             neutral30: '#2A2C36',
             neutral50: '#3D404E',
         },
-        })
+    })
 
-    const setMilk = (e) => {
-        setItem({
-            ...item,
-            milk: e.label,
-        })
-    }
-
-    const setSugar = (e) => {
-        setItem({
-            ...item,
-            sugar: e.label,
-        })
-    }
 
     const setSize = (e) => {
         setItem({
             ...item,
+            title: product.title + ' - ' + e.label.split(" - ")[0],
             price: e.value,
             size: e.label.split(" - ")[0],
         })
@@ -110,8 +74,22 @@ function Options(props) {
         })
     }
 
+    const setOption = (data) => {
+        let newItem = item
+        newItem[data.for] = data.value
+        setItem(newItem)
+    }
+
     const addItem = () => {
-        if (!isNaN(item.quantity) && item.quantity > 0 && item.quantity < 100) {
+        let complete = true
+        Object.keys(product.options).forEach(option => {
+            if (item[option] === undefined) {
+                complete = false
+            } else if (!product.options[option].includes(item[option])) {
+                complete = false
+            }
+        })
+        if (!isNaN(item.quantity) && item.quantity > 0 && item.quantity < 100 && complete) {
             if (window.localStorage.getItem('order') === null) {
                 window.localStorage.setItem('order', JSON.stringify([item]))
             } else {
@@ -128,10 +106,14 @@ function Options(props) {
     return (
         <div className='Options' shown={shown.toString()}>
             <h2>{product.title}</h2>
-            <p className='Options__Label'>Milk</p>
-            <Select className='Options__Select' options={milkOptions} defaultValue={milkOptions[0]} onChange={setMilk} placeholder="Select an option" theme={theme} />
-            <p className='Options__Label'>Sugar</p>
-            <Select className='Options__Select' options={sugarOptions} defaultValue={sugarOptions[0]} onChange={setSugar} placeholder="Select an option" theme={theme} />
+            {
+                Object.keys(options).map((option, idx) => {
+                    return <div key={idx}>
+                        <p className='Options__Label'>{option}</p>
+                        <Select className='Options__Select' options={options[option]} onChange={setOption} placeholder="Select an option" theme={theme} />
+                    </div>
+                })
+            }
             <p className='Options__Label'>Size</p>
             <Select className='Options__Select' options={sizeOptions} defaultValue={sizeOptions[0]} onChange={setSize} placeholder="Select an option" theme={theme} />
             <p className='Options__Label'>Quantity</p>

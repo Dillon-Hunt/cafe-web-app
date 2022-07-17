@@ -1,0 +1,40 @@
+.SearchResults {
+    margin-bottom: 20px;
+}
+
+.SearchResults__Title {
+    margin-bottom: 10px;
+
+    font-size: var(--font-24);
+}
+
+.SearchResults__Items {
+    gap: 10px;
+
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
+.SearchResults__NoResults {
+    width: 120px;
+    height: 200px;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+    border-radius: 5px;
+    padding: 20px;
+
+    background-color: var(--white);
+
+    justify-content: center;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+    flex-direction: column;
+    display: flex;
+}
+
+.SearchResults__NoResults__Text {
+    color: var(--charade);
+}

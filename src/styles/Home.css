@@ -1,0 +1,24 @@
+.Search {
+    margin-bottom: 20px;
+}
+
+.Search__Text {
+    font-size: var(--font-36);
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.Search__Text__Highlighted {
+    color: var(--shamrock);
+}
+
+.Search__Input {
+    width: 100%;
+    height: 40px;
+
+    border-radius: 5px;
+    padding: 10px;
+
+    box-sizing: border-box;
+    border: none;
+}
