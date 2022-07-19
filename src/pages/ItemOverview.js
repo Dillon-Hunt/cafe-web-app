@@ -12,12 +12,15 @@ function ItemOverview(props) {
     const { productId } = useParams()
     const product = props.products.filter(product => product.id === productId)[0]
 
+    // Set state variable (will rerender view on update)
     const [shown, setShown] = useState(false)
 
+    // Show Item Popup
     const showPopupMenu = () => {
         if (shown !== true) setShown(true)
     }
 
+    // Hide Item Popup
     const hidePopupMenu = () => {
         if (shown !== false) setShown(false)
     }

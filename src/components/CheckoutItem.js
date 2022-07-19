@@ -1,8 +1,11 @@
 import '../styles/CheckoutItem.css'
 
+// Format price (2.5) to string with two decimal places (2.50)
 export const formatPrice = (price) => {
     if (price.toString().split(".")[1] === undefined) price = price + '.00'
     else if (price.toString().split(".")[1].length === 1) price = price + '0'
+
+    // Return formatted price
     return price
 }
 

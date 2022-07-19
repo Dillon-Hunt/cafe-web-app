@@ -6,9 +6,15 @@ import { formatPrices } from './Item'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Format options to be usable in HTML
 function getOptions(rawOptions) {
+
+    // Create an object to store the formatted options
     let options = {}
+
     Object.keys(rawOptions).sort((a, b) => a > b).forEach(option => { 
+
+        // Append option to options object
         options[option] = rawOptions[option].map(optionItem => {
             return {
                 value: optionItem,
@@ -17,34 +23,48 @@ function getOptions(rawOptions) {
             }
         })
     })
+
+    // Return formatted options
     return options
 }
 
 function Options(props) {
     const { shown, product } = props
+
+    // Format prices
     product.prices = formatPrices(product.prices)
 
-    const navigate = useNavigate()
 
+    // Format options
     const options = getOptions(product.options)
 
+    // Initialize navigate
+    const navigate = useNavigate()
+
+    // Get sizes and order all sizes alphabetically
     const sizeOptions = Object.keys(product.prices).map(key => {
+
+        // Exclude min and max prices
         if (key === 'min' || key === 'max') return null
+
         return {
             value: product.prices[key],
             label: `${key} - $${product.prices[key]}`,
         }
     }).filter(price => price !== null).sort((a, b) => a.value > b.value)
 
+    // Set state variable for item (will rerender view on update)
     const [item, setItem] = useState({
         title: product.title + ' - ' + sizeOptions[0].label.split(" - ")[0],
         subtitle: product.subtitle,
         image: product.image,
         size: sizeOptions[0].label.split(" - ")[0],
         price: sizeOptions[0].value,
+        options: {},
         quantity: 1,
     })
 
+    // Set color theme for select inputs
     const theme = (theme) => ({
         ...theme,
         colors: {
@@ -57,7 +77,7 @@ function Options(props) {
         },
     })
 
-
+    // Update item state when a size is selected
     const setSize = (e) => {
         setItem({
             ...item,
@@ -67,6 +87,7 @@ function Options(props) {
         })
     }
 
+    // Update item state when a quantity is selected
     const setQuantity = (e) => {
         setItem({
             ...item,
@@ -74,31 +95,55 @@ function Options(props) {
         })
     }
 
+
+    // Update item state when an option is selected
     const setOption = (data) => {
         let newItem = item
-        newItem[data.for] = data.value
+        newItem.options[data.for] = data.value
         setItem(newItem)
     }
 
+    // Add item to order and return to home
     const addItem = () => {
+
         let complete = true
+
+        // Check all forms are filled out
         Object.keys(product.options).forEach(option => {
-            if (item[option] === undefined) {
+            if (item.options[option] === undefined) {
+
+                // If form is not filled out, set complete to false
                 complete = false
-            } else if (!product.options[option].includes(item[option])) {
+            } else if (!product.options[option].includes(item.options[option])) {
+
+                // If form is filled out but is not a valid option, set complete to false
                 complete = false
             }
         })
+
+        // Check fields are valid
         if (!isNaN(item.quantity) && item.quantity > 0 && item.quantity < 100 && complete) {
+
+            // Check if an order exists
             if (window.localStorage.getItem('order') === null) {
+
+                // Create an order
                 window.localStorage.setItem('order', JSON.stringify([item]))
             } else {
+
+                // Append item to new order
                 let order = JSON.parse(window.localStorage.getItem('order'))
                 order.push(item)
+
+                // Save new order
                 window.localStorage.setItem('order', JSON.stringify(order))
             }
+
+            // Return to home
             navigate('/home')
         } else {
+
+            // If fields are not valid, alert user
             alert('Ensure All Fields Have Valid Inputs.')
         }
     }

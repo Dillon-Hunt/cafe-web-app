@@ -12,20 +12,32 @@ import { Helmet } from 'react-helmet-async'
 function Checkout(props) {
     const { signedIn } = props
 
+    // Get order
     const order = JSON.parse(localStorage.getItem('order'))
 
+    // Calculate total price of order
     let total = 0
-
     order !== null && order.forEach(item => {
+        // Add price of item to total
         total += item.price * item.quantity
     })
 
+    // Initialize navigate
     const navigate = useNavigate()
 
+    // Submit order to database
     const submitOrder = () => {
+
+        // Create order is not empty
         if (order !== null) {
+
+            // Add order to database
             addDoc(collection(database, 'orders'), { items: order, name: signedIn.displayName, time: Date.now() })
+            
+            // Delete order from local storage
             localStorage.clear()
+
+            // Navigate to success page
             navigate('/success')
         }
     }

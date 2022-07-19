@@ -3,6 +3,8 @@ import Item from './Item'
 import '../styles/Under5.css'
 
 function Under5(props) {
+
+  // Filter out products that are not under $5
   const products = props.products.filter(product => product.prices.min < 5)
 
   return (

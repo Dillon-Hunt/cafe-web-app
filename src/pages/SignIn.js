@@ -7,37 +7,52 @@ import { Helmet } from 'react-helmet-async'
 
 import '../styles/SignIn.css'
 
-
+// Initialize new Google provider
 const provider = new GoogleAuthProvider();
 
 function SignIn() {
+
+    // Get path
     const path = window.location.pathname
 
+    // Initialize navigate
     const navigate = useNavigate()
 
+    // Set path to '/'
     useEffect(() => {
         if (path !== '/') {
             navigate('/')
         }
     }, [path, navigate])
 
+    // Show sign in popup
     const signInWithGoogle = () => {
+
+        // Show popup
         signInWithPopup(auth, provider)
             .then((result) => {
+
+                // Check the user is allowed to access the app
                 getDoc(doc(database, 'config', 'allowedUsers')).then(snapshot => {
                     if (snapshot.data().emails.includes(result.user.email)) {
+
+                        // If user is allowed, sign them in
                         navigate('/home')
                     } else {
+
+                        // If user is not allowed, sign them out and alert them
                         alert('Staff Only, If you\'re a staff member contact an administrator.')
                         signOut(auth)
                     }
                 })
             }).catch((error) => {
-            const errorCode = error.code
-            const errorMessage = error.message
 
-            console.log(errorCode, errorMessage)
-        })
+                // If there is an error, catch it
+                const errorCode = error.code
+                const errorMessage = error.message
+
+                console.log(errorCode, errorMessage)
+            })
     }
 
     return (

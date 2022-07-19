@@ -14,7 +14,8 @@ import { HelmetProvider, Helmet } from 'react-helmet-async'
 
 import { initializeApp } from "firebase/app"
 import { getFirestore, collection, getDocs, getDoc, doc } from "firebase/firestore"
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth'
+//import { getAnalytics } from 'firebase/analytics'
 
 const firebaseConfig = {
   apiKey: "AIzaSyD1MZx4gn6sZB83dm16fgaGG-wLw6mId_o",
@@ -29,31 +30,47 @@ const firebaseConfig = {
 export const app = initializeApp({...firebaseConfig})
 export const database = getFirestore(app)
 export const auth = getAuth(app)
-// Add Analytics Here
+//const analytics = getAnalytics(app)
 
 function App() {
+
+  // Set state variables (will rerender view on update)
   const [products, setProducts] = useState(null)
   const [signedIn, loading] = useAuthState(auth)
   const [allowedAccess, setAllowedAccess] = useState(false)
 
+  // Get products from database
   useEffect(() => {
     getDocs(collection(database, 'products')).then(results => {
-    setProducts(results.docs.map(result => {
-      let products = result.data()
-      products.id = result.id
-      return products
-    }))
+
+      // Set products to results from database
+      setProducts(results.docs.map(result => {
+        let products = result.data()
+        products.id = result.id
+        return products
+      }))
   })}, [])
 
+  // Check if user is signed in
   useEffect(() => {
+
+    // Not signed in
     if (signedIn === null) {
+
+      // Show sign in page
       setAllowedAccess(true)
     } else {
+
+      // Get list of allowed users from database
       getDoc(doc(database, 'config', 'allowedUsers')).then(snapshot => {
+
+        // Check if user is allowed access
         if (!snapshot.data().emails.includes(signedIn.email)) {
-            signOut(auth)
-            setAllowedAccess(false)
-            alert('Staff Only, If you\'re a staff member contact an administrator.')
+
+          // If not, sign them out and alert them
+          signOut(auth)
+          setAllowedAccess(false)
+          alert('Staff Only, If you\'re a staff member contact an administrator.')
         }
       })
     }

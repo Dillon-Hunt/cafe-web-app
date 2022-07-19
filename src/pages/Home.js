@@ -12,22 +12,34 @@ import '../styles/Home.css'
 function Home(props) {
     const { products, signedIn } = props
 
-    console.log(signedIn)
-
+    // Set state variable (will rerender view on update)
     const [results, setResults] = useState([])
 
+    // Update search results
     const updateResults = (e) => {
-        if (e.target.value === "") setResults([])
-        else {
+
+        // Check if search term is empty
+        if (e.target.value === "") {
+
+            // Set search results to empty array
+            setResults([])
+        } else {
+
+            // Filter products by search term
             const results = products.filter(product => {
                 if (product.title.includes(e.target.value) || product.subtitle.includes(e.target.value)) return true
                 return false
             })
 
+            // Check if results are empty
             if (results.length !== 0) {
+
+                // Set search results to filtered products
                 setResults(results)
             } else {
-                setResults([null])
+
+                // Set search results to empty array
+                setResults([])
             }
         }
     }

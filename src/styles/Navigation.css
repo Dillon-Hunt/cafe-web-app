@@ -1,4 +1,38 @@
-.Navigation {
+.Navigation__Image {
+    top: 20px;
+    right: 20px;
+
+    transform: rotateZ(0deg);
+
+    transition: .4s ease-in-out;
+
+    position: absolute;
+}
+
+.Navigation__Image[shown = true] {
+    transform: rotateZ(180deg);
+}
+
+.Navigation__Count {
+    top: 4px;
+    right: -200vw;
+
+    padding: 14px 60px 14px 10px;
+    border-radius: 5px;
+
+    background-color: var(--white);
+    color: var(--light-charade);
+
+    transition: .8s ease-in-out;
+    position: absolute;
+    text-align: right;
+}
+
+.Navigation__Count[shown = true] {
+    right: 15px;
+}
+
+.Navigation__Notch {
     width: 53px;
     height: 48px;
 
@@ -11,17 +45,4 @@
     position: absolute;
     display: flex;
     justify-content: flex-end;
-}
-
-.Navigation__image {
-    flex-grow: 0;
-    flex-shrink: 0;
-
-    transform: rotateZ(0deg);
-
-    transition: .4s ease-in-out;
-}
-
-.Navigation__image[shown = true] {
-    transform: rotateZ(180deg);
 }
