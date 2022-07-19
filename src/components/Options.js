@@ -163,7 +163,8 @@ function Options(props) {
             <Select className='Options__Select' options={sizeOptions} defaultValue={sizeOptions[0]} onChange={setSize} placeholder="Select an option" theme={theme} />
             <p className='Options__Label'>Quantity</p>
             <input type='number' min='1' max='99' className='Options__Quantity' defaultValue={1} onChange={setQuantity} placeholder="Set quantity" />
-            <button className='Options__AddToOrder__Button' onClick={addItem}>Add To Order</button>
+                    <div className='Options__Hide__Overflow' shown={shown.toString()}/>
+            <button className='Options__AddToOrder__Button' onClick={addItem} shown={shown.toString()}>Add To Order</button>
         </div>
     )
 }

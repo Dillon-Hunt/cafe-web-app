@@ -11,6 +11,8 @@
     position: fixed;
     transition: .4s ease-in-out;
     box-sizing: border-box;
+    overflow-y: scroll;
+    padding-bottom: 110px;
 }
 
 .Options[shown = true] {
@@ -37,11 +39,15 @@
     font-size: var(--font-18);
 }
 
+.Options__AddToOrder__Button[shown = true] {
+    top: calc(100vh - 100px);
+}
+
 .Options__AddToOrder__Button {
     width: calc(100vw - 40px);
     height: 80px;
 
-    bottom: 20px;
+    top: calc(200vh - 100px);
     left: 20px;
     border-radius: 5px;
 
@@ -49,7 +55,26 @@
     color: var(--white);
     font-size: var(--font-18);
 
+    transition: .4s ease-in-out;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     border: none;
+}
+
+.Options__Hide__Overflow[shown = true] {
+    top: calc(100vh - 110px);
+}
+
+.Options__Hide__Overflow {
+    width: 100vw;
+    height: 110px;
+
+    top: calc(200vh - 110px);
+    left: 0;
+    border-radius: 5px;
+
+    background-color: var(--light-charade);
+
+    transition: .4s ease-in-out;
+    position: fixed;
 }
