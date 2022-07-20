@@ -1,5 +1,6 @@
 import WelcomeBanner from '../components/WelcomeBanner'
 import SearchResults from '../components/SearchResults'
+import All from '../components/All'
 import Popular from '../components/Popular'
 import Under5 from '../components/Under5'
 import Navigation from '../components/Navigation'
@@ -65,6 +66,7 @@ function Home(props) {
             }
             <Popular products={products} />
             <Under5 products={products} />
+            <All products={products} />
             <Navigation />
         </div>
   ) 

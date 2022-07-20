@@ -1,0 +1,17 @@
+.All {
+    margin-bottom: 20px;
+}
+
+.All__Title {
+    margin-bottom: 10px;
+
+    font-size: var(--font-24);
+}
+
+.All__Items {
+    gap: 10px;
+
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}

@@ -62,6 +62,7 @@ function Options(props) {
         price: sizeOptions[0].value,
         options: {},
         quantity: 1,
+        id: product.id,
     })
 
     // Set color theme for select inputs
