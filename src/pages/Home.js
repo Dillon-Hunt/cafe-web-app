@@ -64,9 +64,9 @@ function Home(props) {
             {
                 results.length !== 0 && <SearchResults products={results} />
             }
+            <All products={products} />
             <Popular products={products} />
             <Under5 products={products} />
-            <All products={products} />
             <Navigation />
         </div>
   ) 
