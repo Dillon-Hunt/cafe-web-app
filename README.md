@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Cafe Web App
 A online ordering system for a cafe.
 
 Home Page | Overview | Checkout
